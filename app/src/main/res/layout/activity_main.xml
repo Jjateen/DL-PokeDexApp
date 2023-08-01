@@ -12,8 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_centerVertical="true"
-        android:layout_marginBottom="47dp"
+        android:layout_marginBottom="101dp"
         android:backgroundTint="#03A9F4"
         android:text="Click Image"
         android:textAllCaps="false"
@@ -22,8 +21,8 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="367dp"
-        android:layout_height="409dp"
+        android:layout_width="366dp"
+        android:layout_height="332dp"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10sp"
         android:backgroundTintMode="screen" />
@@ -36,23 +35,42 @@
         android:layout_below="@+id/imageView"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginStart="128dp"
-        android:layout_marginTop="59dp"
-        android:layout_marginEnd="129dp"
-        android:text="Classified as:"
+        android:layout_marginStart="125dp"
+        android:layout_marginTop="23dp"
+        android:layout_marginEnd="132dp"
+        android:text=" Classified as:"
         android:textColor="#FFFFFF"
         android:textSize="24sp"
+        android:textStyle="bold" />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerVertical="true"
+        android:layout_marginBottom="34dp"
+        android:backgroundTint="#03A9F4"
+        android:text="Select Image"
+        android:textAllCaps="false"
+        android:textSize="21sp"
         android:textStyle="bold" />
 
     <TextView
         android:id="@+id/result"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
+        android:layout_height="74dp"
+        android:layout_above="@+id/button"
         android:layout_below="@+id/classified"
-        android:layout_centerHorizontal="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="126dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="135dp"
+        android:layout_marginBottom="99dp"
         android:text=""
         android:textColor="#DA0505"
-        android:textSize="34sp"
+        android:textSize="28sp"
         android:textStyle="bold" />
 
 </RelativeLayout>
