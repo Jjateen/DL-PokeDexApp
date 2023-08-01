@@ -1,13 +1,8 @@
-/*
- * Created by ishaanjav
- * github.com/ishaanjav
-*/
-
 package app.ij.mlwithtensorflowlite;
-
+import android.graphics.Bitmap;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-
+import android.net.Uri;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -35,7 +30,9 @@ public class MainActivity extends AppCompatActivity {
     TextView result, confidence;
     ImageView imageView;
     Button picture;
+    Button sel;
     int imageSize = 64;
+    private Bitmap img;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +43,22 @@ public class MainActivity extends AppCompatActivity {
 //        confidence = findViewById(R.id.confidence);
         imageView = findViewById(R.id.imageView);
         picture = findViewById(R.id.button);
+        sel = findViewById(R.id.button2);
+
+
+        sel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Launch file picker if we have permission
+                if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+                    Intent filePickerIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                    startActivityForResult(filePickerIntent, 2);
+                } else {
+                    // Request file read permission if we don't have it.
+                    requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 200);
+                }
+            }
+        });
 
         picture.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,6 +72,7 @@ public class MainActivity extends AppCompatActivity {
                     requestPermissions(new String[]{Manifest.permission.CAMERA}, 100);
                 }
             }
+
         });
     }
 
@@ -128,9 +142,25 @@ public class MainActivity extends AppCompatActivity {
             image = ThumbnailUtils.extractThumbnail(image, dimension, dimension);
             imageView.setImageBitmap(image);
 
-            image = Bitmap.createScaledBitmap(image, imageSize, imageSize, false);
+            image = Bitmap.createScaledBitmap(image, imageSize, imageSize, true);
             classifyImage(image);
         }
+        else if (requestCode == 2 && resultCode == RESULT_OK && data != null) {
+            Uri selectedImageUri = data.getData();
+            try {
+                // Get the image bitmap from the selected URI
+                Bitmap image = MediaStore.Images.Media.getBitmap(getContentResolver(), selectedImageUri);
+                int dimension = Math.min(image.getWidth(), image.getHeight());
+                image = ThumbnailUtils.extractThumbnail(image, dimension, dimension);
+                imageView.setImageBitmap(image);
+
+                image = Bitmap.createScaledBitmap(image, imageSize, imageSize, true);
+                classifyImage(image);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
         super.onActivityResult(requestCode, resultCode, data);
     }
 }
